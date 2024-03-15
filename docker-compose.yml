@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start:dev
+    depends_on:
+      - nats
+      - mysql
+  users-microservice:
+    build:
+      context: .
+      dockerfile: ./apps/users/Dockerfile
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start:dev users
+    depends_on:
+      - nats
+      - mysql
+  orders-microservice:
+    build:
+      context: .
+      dockerfile: ./apps/orders/Dockerfile
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start:dev orders
+    depends_on:
+      - nats
+      - mysql
+  nats:
+    image: nats
+    ports:
+      - 4222:4222
+  mysql:
+    image: mysql
+    env_file:
+      - .env
+    ports:
+      - 3306:3306
