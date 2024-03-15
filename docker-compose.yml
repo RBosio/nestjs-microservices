@@ -9,7 +9,7 @@ services:
       - 3000:3000
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./node_modules:/usr/src/app/node_modules
     command: npm run start:dev
     depends_on:
       - nats
@@ -20,7 +20,7 @@ services:
       dockerfile: ./apps/users/Dockerfile
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./node_modules:/usr/src/app/node_modules
     command: npm run start:dev users
     depends_on:
       - nats
@@ -31,7 +31,7 @@ services:
       dockerfile: ./apps/orders/Dockerfile
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./node_modules:/usr/src/app/node_modules
     command: npm run start:dev orders
     depends_on:
       - nats
