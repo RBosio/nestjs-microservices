@@ -1,20 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ApiGatewayController } from './api-gateway.controller';
 import { ApiGatewayService } from './api-gateway.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
+import { UserModule } from './user/user.module';
+import { NatsClientModule } from './nats-client/nats-client.module';
 
 @Module({
-  imports: [
-    ClientsModule.register([
-      {
-        name: 'NATS_SERVICE',
-        transport: Transport.NATS,
-        options: {
-          servers: ['nats://nats'],
-        },
-      },
-    ]),
-  ],
+  imports: [NatsClientModule, UserModule],
   controllers: [ApiGatewayController],
   providers: [ApiGatewayService],
 })
