@@ -9,7 +9,7 @@ import { User } from './user.entity';
 
 @Entity('order_')
 export class Order {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
